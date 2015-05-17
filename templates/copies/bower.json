@@ -1,0 +1,30 @@
+{
+  "name": "Nyx",
+  "version": "1.0",
+  "authors": [
+    "cloverzero <cloverzero@gmail.com>"
+  ],
+  "description": "web page generator for mobile device.",
+  "main": "scripts/nyx.js",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "h5"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "animate.css": "~3.2.6",
+    "zepto": "~1.1.6",
+    "requirejs": "~2.1.17",
+    "zeptojs": "~1.1.6",
+    "velocity": "~1.2.2"
+  }
+}

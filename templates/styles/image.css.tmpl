@@ -1,0 +1,5 @@
+#<%=widget.id%> {
+    background: url(<%=widget.src%>) no-repeat; <% if (widget.align == 'justify' || widget.verticalAlign == 'justify') { %>
+    background-size: cover; <% } else { %>
+    background-size: <%=widget.width%>px <%=widget.height%>px; <% } %>
+}

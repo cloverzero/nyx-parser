@@ -1,0 +1,19 @@
+#<%=widget.id%> {<% if (widget.top) { %>
+    top: <%=widget.top%>;<% } %> <% if (widget.bottom) { %>
+    bottom: <%=widget.bottom %>;<% } %> <% if (widget.left) { %>
+    left: <%=widget.left%>; <% } %> <% if (widget.right) { %>
+    right: <%=widget.right %>; <% } %> <% if (widget.transformOrigin) { %>
+    transform-origin: <%=widget.transformOrigin %>; <% } %> <% if (widget.align == 'center') { %>
+    left: 50%;
+    margin-left: -<%=widget.width / 2%>px; <% } %> <% if (widget.verticalAlign == 'center') { %>
+    top: 50%;
+    margin-top: -<%=widget.height / 2%>px; <% } %> <% if (widget.align == 'justify') { %>
+    width: 100%;
+    left: 0; <% } %> <% if (widget.verticalAlign == 'justify') { %>
+    height: 100%;
+    top: 0; <% } %> <% if (widget.width) { %>
+    width: <%=widget.width%>px; <% } %> <% if (widget.height) { %>
+    height: <%=widget.height%>px; <% } %> <% if (widget.enterDuration) { %>
+    -webkit-animation-duration: <%= widget.enterDuration / 1000 %>s;
+    animation-duration: <%= widget.enterDuration / 1000 %>s; <% } %>
+}

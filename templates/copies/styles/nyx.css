@@ -1,0 +1,221 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+ul, ol, li {
+    margin: 0;
+    padding: 0;
+}
+
+.nyx-full-width {
+    width: 100%;
+}
+
+.nyx-full-height {
+    height: 100%;
+}
+
+.nyx-wrapper {
+    overflow: hidden;
+}
+
+.nyx-page {
+    overflow: hidden;
+}
+
+.nyx-animated-page {
+    position: absolute;
+    left: 0;
+    height: 0;
+    width: 100%;
+}
+
+.nyx-widget {
+    position: absolute;
+}
+
+.nyx-widget.animated {
+    display: none;
+}
+
+.nyx-slide-show {
+    width: 100%;
+    height: 100%;
+}
+
+.nyx-slide-show li {
+    float: left;
+    height: 100%;
+    overflow: hidden;
+}
+
+.nyx-image {
+    background: no-repeat center center;
+    background-size: cover;
+}
+
+/* Nyx Animation */
+@-webkit-keyframes nyxFlipOutUp {
+    0% {
+        -webkit-transform: perspective(400px);
+        transform: perspective(400px);
+    }
+
+    50% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    }
+
+    100% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 180deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, 180deg);
+    }
+}
+
+@keyframes nyxFlipOutUp {
+    0% {
+        -webkit-transform: perspective(400px);
+        transform: perspective(400px);
+    }
+
+    50% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    }
+
+    100% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 180deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, 180deg);
+    }
+}
+
+.nyxFlipOutUp {
+    -webkit-animation-name: nyxFlipOutUp;
+    animation-name: nyxFlipOutUp;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+}
+
+@-webkit-keyframes nyxFlipInUp {
+    0% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -180deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, -180deg);
+    }
+
+    100% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 0deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, 0deg);
+    }
+}
+
+@keyframes nyxFlipInUp {
+    0% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -180deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, -180deg);
+    }
+
+    100% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 0deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, 0deg);
+    }
+}
+
+.nyxFlipInUp {
+    -webkit-animation-name: nyxFlipInUp;
+    animation-name: nyxFlipInUp;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+}
+
+@-webkit-keyframes nyxFlipOutDown {
+    0% {
+        -webkit-transform: perspective(400px);
+        transform: perspective(400px);
+    }
+
+    50% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -90deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, -90deg);
+    }
+
+    100% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -180deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, -180deg);
+    }
+}
+
+@keyframes nyxFlipOutDown {
+    0% {
+        -webkit-transform: perspective(400px);
+        transform: perspective(400px);
+    }
+
+    50% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -90deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, -90deg);
+    }
+
+    100% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -180deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, -180deg);
+    }
+}
+
+.nyxFlipOutDown {
+    -webkit-animation-name: nyxFlipOutDown;
+    animation-name: nyxFlipOutDown;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+}
+
+@-webkit-keyframes nyxFlipInDown {
+    0% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 180deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, 180deg);
+    }
+
+    50% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    }
+
+    100% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 0deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, 0deg);
+    }
+}
+
+@keyframes nyxFlipInDown {
+    0% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 180deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, 180deg);
+    }
+
+    50% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    }
+
+    100% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 0deg);
+        transform: perspective(400px) rotate3d(1, 0, 0, 0deg);
+    }
+}
+
+.nyxFlipInDown {
+    -webkit-animation-name: nyxFlipInDown;
+    animation-name: nyxFlipInDown;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+}
+

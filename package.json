@@ -1,0 +1,19 @@
+{
+  "name": "nyx-parser",
+  "version": "0.1.7",
+  "description": "mobile html page generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author":  {
+    "name": "clover_4l",
+    "email": "cloverzero@gmail.com",
+    "url": "https://github.com/cloverzero"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "ncp": "^2.0.0",
+    "underscore": "^1.8.3"
+  }
+}
