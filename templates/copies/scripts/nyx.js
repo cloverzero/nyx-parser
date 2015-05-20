@@ -26,6 +26,11 @@ define(function (require) {
          * 页面初始化
          */
         initPages: function () {
+            // 解决微信老版本浏览器不支持zepto swipeUp事件的问题
+            document.addEventListener('touchmove', function (event) {
+                event.preventDefault();
+            }, false);
+
             var self = this;
             // 获取浏览器窗口高度
             var windowHeight = $(window).height();
