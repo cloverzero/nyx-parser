@@ -1,19 +1,23 @@
 {
   "name": "nyx-parser",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "mobile html page generator",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author":  {
+  "author": {
     "name": "clover_4l",
     "email": "cloverzero@gmail.com",
     "url": "https://github.com/cloverzero"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cloverzero/nyx-parser.git"
+  },
   "license": "ISC",
   "dependencies": {
-    "ncp": "^2.0.0",
+    "fs-extra": "^0.18.3",
     "underscore": "^1.8.3"
   }
 }
