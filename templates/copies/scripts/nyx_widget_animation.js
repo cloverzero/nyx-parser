@@ -14,7 +14,7 @@ define(["zepto", "zepto-deferred"], function ($) {
                             $widget.show();
                         }
                         $widget.addClass(clazz)
-                            .one("animationend  webkitAnimationEnd", function () {
+                            .one("webkitAnimationEnd", function () {
                                 if (type == "leave") {
                                     $widget.hide();
                                 }

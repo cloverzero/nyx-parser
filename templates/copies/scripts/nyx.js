@@ -16,6 +16,17 @@ define(function (require) {
         this.totalPages = config.pages.length;
         this.widgets = [];
 
+        this.pageLoaded = false;
+        this.scrawlFinished = true;
+
+
+        this.loadedPromise = new $.Deferred(function(deferred) {
+            window.onPageLoaded(function () {
+                deferred.resolve();
+            });
+        });
+
+
         /**
          * 用于锁定翻页操作，在翻页动画过程中，此值为true
          * @type {boolean}
@@ -42,7 +53,6 @@ define(function (require) {
         }
 
         this.executeWidgetAnimation("enter");
-
     }
 
     Nyx.prototype = {
@@ -76,24 +86,66 @@ define(function (require) {
                 }
                 $page.addClass("nyx-animated-page");
 
-                self.widgets[index] = $page.find(".animated");
+                self.widgets[index] = $page.children(".animated");
 
                 var page = pages[index];
+                if (page.type === "welcome") {
+                    self.startPage = 1;
+                }
                 var widgets = page.widgets;
+
                 for (var widget, i = 0; widget = widgets[i]; i++) {
+                    if (widget.linkTo) {
+                        (function (link) {
+                            $("#" + widget.id).click(function () {
+                                window.open(link);
+                            });
+                        })(widget.linkTo);
+                    }
+                    if (widget.moveTo) {
+                        (function (id) {
+                            $("#" + widget.id).click(function () {
+                                console.log("234324");
+                                self.moveTo($("#" + id).index());
+                            });
+                        })(widget.moveTo);
+                    }
                     if (widget.type === "slideShow") {
                         new SlideShow("#" + widget.id);
                     } else if (widget.type === "scrawl") {
                         widget.width = windowWidth;
                         widget.height = windowHeight;
                         var scrawl = new Scrawl("#" + widget.id, widget);
-                        scrawl.onOver(function () {
-                            self.nextPage();
-                        })
+
+                        // 这部分代码写的有点恶心，主要是这个组件的有这么个特殊性，后面想想有什么办法解决。
+                        if (page.type === "welcome") {
+                            self.loadedPromise = self.loadedPromise.then(function () {
+                                return new $.Deferred(function (deferred) {
+                                    scrawl.onOver(function () {
+                                        deferred.resolve();
+                                    });
+                                });
+                            })
+                        } else {
+                            scrawl.onOver(function () {
+                                self.nextPage();
+                            })
+                        }
                     }
                 }
             });
 
+            if (self.startPage !== 0) {
+                self.loadedPromise.then(function () {
+                    self.moveTo(self.startPage, 1);
+                });
+            }
+        },
+
+        _gotoStartPage: function () {
+            if (this.pageLoaded && this.scrawlFinished) {
+                 this.moveTo(1, 1);
+            }
         },
 
         initMusic: function () {

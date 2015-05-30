@@ -15,7 +15,8 @@ define(["zepto"], function ($) {
     Scrawl.prototype = {
         initCanvas: function (config) {
             var self = this;
-            this.canvas = this.$root.children("canvas")[0];
+            this.$canvas = this.$root.children("canvas");
+            this.canvas = this.$canvas[0];
             this.canvas.width = config.width;
             this.canvas.height = config.height;
             this.ctx = this.canvas.getContext("2d");
@@ -25,10 +26,10 @@ define(["zepto"], function ($) {
             }
             this.ctx.lineJoin="round";
             this.ctx.lineCap= "round";
-            this.ctx.lineWidth = 15;
+            this.ctx.lineWidth = 25;
             this.ctx.globalCompositeOperation = "destination-out";
 
-            $(this.canvas).on("touchstart", function (e) {
+            this.$canvas.on("touchstart", function (e) {
                 e.stopPropagation();
                 var target = e.touches[0];
                 self.lastX = target.pageX;
@@ -43,10 +44,11 @@ define(["zepto"], function ($) {
             }).on("touchend",function(e){
                 e.stopPropagation();
                 if (self.isOver()) {
-
-                    if (self.overCallback) {
-                        self.overCallback.call(this);
-                    }
+                    self.$canvas.addClass("fadeOut").one("animationend webkitAnimationEnd", function () {
+                        if (self.overCallback) {
+                            self.overCallback.call(this);
+                        }
+                    });
                 }
             });
         },
