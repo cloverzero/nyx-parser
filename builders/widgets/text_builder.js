@@ -7,7 +7,7 @@ var _ = require("underscore");
 
 function TextBuilder(context) {
     WidgetBuilder.call(this, context);
-    this.htmlTemplate = _.template('<div id="<%=id%>" class="nyx-widget <%=hasAnimation ? \'animated\' : \'\'%>"><%=value%></div>');
+    this.htmlTemplate = _.template('<div id="<%=id%>" class="nyx-widget nyx-text <%=hasAnimation ? \'animated\' : \'\'%>"><%=value%></div>');
     this.textCssTemplate = _.template(fs.readFileSync(context.templates + "/styles/text.css.tmpl", "utf-8"));
 }
 

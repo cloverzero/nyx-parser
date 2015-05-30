@@ -4,17 +4,19 @@ var _ = require("underscore");
 
 var ImageBuilder = require("./widgets/image_builder");
 var TextBuilder = require("./widgets/text_builder");
-var SlideShowBuilder = require("./widgets/text_builder");
+var SlideShowBuilder = require("./widgets/slide_show_builder");
+var ScrawlBuilder = require("./widgets/scrawl_builder");
 
 function PageBuilder(context) {
     var cssTemplateString = fs.readFileSync(context.templates + "/styles/page.css.tmpl", "utf-8");
     this.cssTemplete = _.template(cssTemplateString);
-    this.htmlTemplate = _.template('<div class="nyx-page nyx-page-<%=index%> animated"><%=widgets%></div>');
+    this.htmlTemplate = _.template('<div id="<%=id%>" class="nyx-page nyx-page-<%=index%> animated"><%=widgets%></div>');
 
     this.widgetBuilders = {
         image: new ImageBuilder(context),
         text: new TextBuilder(context),
-        slideShow: new SlideShowBuilder(context)
+        slideShow: new SlideShowBuilder(context),
+        scrawl: new ScrawlBuilder(context)
     }
 }
 

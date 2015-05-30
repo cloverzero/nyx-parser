@@ -1,14 +1,18 @@
 define(function (require) {
+    "use strict";
+
     var $ = require("zepto");
     require("zepto-touch");
     var pageAnimations = require("nyx_page_animation");
     var widgetAnimations = require("nyx_widget_animation");
     var SlideShow = require("widgets/slide_show");
+    var Scrawl = require("widgets/scrawl");
 
     function Nyx(config) {
         this.config = config;
 
         this.currentPage = 0;
+        this.startPage = 0;
         this.totalPages = config.pages.length;
         this.widgets = [];
 
@@ -19,6 +23,26 @@ define(function (require) {
         this.freeze = false;
 
         this.initPages();
+        this.initMusic();
+        this.initCount();
+
+        var hash = location.hash;
+        if (hash.length > 1) {
+            var startPage = location.hash.substring(1) - 0;
+            if (!isNaN(startPage)) {
+                this.moveTo(startPage, 1, true);
+                return;
+            } else {
+                var target = $(hash);
+                if (target.size() > 0) {
+                    this.moveTo(target.index(), 1, true);
+                    return;
+                }
+            }
+        }
+
+        this.executeWidgetAnimation("enter");
+
     }
 
     Nyx.prototype = {
@@ -32,8 +56,10 @@ define(function (require) {
             }, false);
 
             var self = this;
-            // 获取浏览器窗口高度
-            var windowHeight = $(window).height();
+
+            var $window = $(window);
+            var windowHeight = $window.height();
+            var windowWidth = $window.width();
 
             var $nyx = $(".nyx-wrapper");
             $nyx.on("swipeUp", function () {
@@ -45,7 +71,6 @@ define(function (require) {
             var pages = this.config.pages;
             this.$pages = $(".nyx-page").each(function (index) {
                 var $page = $(this);
-                $page.height(windowHeight);
                 if (self.currentPage != index) {
                     $page.hide();
                 }
@@ -56,10 +81,58 @@ define(function (require) {
                 var page = pages[index];
                 var widgets = page.widgets;
                 for (var widget, i = 0; widget = widgets[i]; i++) {
-                    if (widget.type == "slideShow") {
+                    if (widget.type === "slideShow") {
                         new SlideShow("#" + widget.id);
+                    } else if (widget.type === "scrawl") {
+                        widget.width = windowWidth;
+                        widget.height = windowHeight;
+                        var scrawl = new Scrawl("#" + widget.id, widget);
+                        scrawl.onOver(function () {
+                            self.nextPage();
+                        })
                     }
                 }
+            });
+
+        },
+
+        initMusic: function () {
+            var self = this;
+            if (this.config.audio) {
+                this.isAudioOn = false;
+                this.audioElement = document.getElementById("nyx-audio");
+                this.$audioButton = $("#nyx-audio-toggle-button").click(function () {
+                    self.toggleAudio();
+                });
+                if (this.config.audio.autoplay) {
+                    this.toggleAudio();
+                }
+            }
+        },
+
+        toggleAudio: function () {
+            if (this.isAudioOn) {
+                this.audioElement.pause();
+                this.$audioButton.removeClass("rotating");
+            } else {
+                this.audioElement.play();
+                this.$audioButton.addClass("rotating");
+            }
+            this.isAudioOn = !this.isAudioOn;
+        },
+
+        initCount: function () {
+            var self = this;
+            $.get("/count/" + this.config.id, function (response) {
+                self.setCount(response.count);
+            })
+        },
+
+        setCount: function (count) {
+            $(".nyx-text").each(function () {
+                var $text = $(this);
+                var text = $text.text();
+                $text.text(text.replace("{count}", count));
             });
         },
 
@@ -68,7 +141,7 @@ define(function (require) {
          */
         nextPage: function () {
             if (this.currentPage == (this.totalPages - 1)) {
-                this.moveTo(1, 1);
+                this.moveTo(this.startPage, 1);
             } else {
                 this.moveTo(this.currentPage + 1);
             }
@@ -78,7 +151,7 @@ define(function (require) {
          * 上一页
          */
         prevPage: function () {
-            if (this.currentPage == 1) {
+            if (this.currentPage == this.startPage) {
                 this.moveTo(this.totalPages - 1, -1);
             } else {
                 this.moveTo(this.currentPage - 1);
@@ -89,8 +162,9 @@ define(function (require) {
          * 切换页面，整个过程包含了执行当前页的离场动画，页面切换，以及执行目标页的进场动画
          * @param {Number} pageNumber 页码，从0开始计数
          * @param  {Number} [direction] 方向,大于0表示正向，小于0表示逆向，值本身代码两个页面的距离
+         * @param {boolean} [skipLeave] 忽略离场动画
          */
-        moveTo: function (pageNumber, direction) {
+        moveTo: function (pageNumber, direction, skipLeave) {
             var self = this;
 
             if (self.freeze) {
@@ -99,7 +173,8 @@ define(function (require) {
 
             self.freeze = true;
             var prevPage = self.currentPage;
-            var promises = self.executeWidgetAnimation("leave");
+            var promises = skipLeave ? [] : self.executeWidgetAnimation("leave");
+
             $.when.apply($, promises).then(function () {
                 return self.switchPage(pageNumber, direction);
             }).then(function () {

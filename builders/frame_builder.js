@@ -17,15 +17,25 @@ FrameBuilder.prototype = {
         var styles = [];
         var pages = [];
 
-        styles.push("body { background-color: " + (config.backgroundColor || "black") + "; }");
+        var frameStyle = "body { ";
+        if (config.backgroundImage) {
+            frameStyle += 'background: url(' + config.backgroundImage + ') center center no-repeat;'
+        }
+        frameStyle += "background-color: " + (config.backgroundColor || "black") + ";";
+        frameStyle += " }";
+        styles.push(frameStyle);
 
         config.pages.forEach(function (page, index) {
             var result = self.pageBuilder.build(page, index);
             styles.push(result.css);
             pages.push(result.html);
         });
+
         return this.template({
+            id: config.id,
             title: config.title,
+            audio: config.audio,
+            wxEmbed: config.wxEmbed,
             styles: styles.join("\n"),
             pages: pages.join("\n")
         });

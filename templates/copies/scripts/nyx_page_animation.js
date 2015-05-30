@@ -1,6 +1,7 @@
 define(["zepto", "zepto-deferred"], function ($) {
     var cssExecutors = {
         slide: [["slideOutUp", "slideInUp"], ["slideOutDown", "slideInDown"]],
+        slideHorizontally: [["slideOutLeft", "slideInRight"], ["slideOutRight", "slideInLeft"]],
         flip: [["nyxFlipOutUp", "nyxFlipInUp"], ["nyxFlipOutDown", "nyxFlipInDown"]]
     };
 

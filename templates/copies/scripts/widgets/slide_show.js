@@ -1,4 +1,4 @@
-define(["zepto", "velocity"], function ($) {
+define(["zepto", "../nyx_page_animation"], function ($, pageAnimations) {
     /**
      *
      * @param {String|Zepto} target
@@ -12,36 +12,49 @@ define(["zepto", "velocity"], function ($) {
 
         self.screenWidth = $(window).width();
 
-        self.$ul = self.$root.children();
-        self.$slides = self.$ul.children().each(function () {
-            this.style.width = self.screenWidth + "px";
+        self.$ul = self.$root.children("ul");
+        self.$slides = self.$ul.children().each(function (index) {
+            var $slide = $(this);
+            if (index != 0) {
+                $slide.hide();
+            }
         });
 
         self.length = self.$slides.size();
-        self.$ul.width(self.screenWidth * self.length);
+
+
+        self.executor = pageAnimations.getExecutor('slideHorizontally');
 
         self.$root.on("swipeLeft", function () {
             self.next();
         }).on("swipeRight", function () {
             self.prev();
         });
-        $.Velocity.hook(self.$root, "translateX", "0px");
     }
 
     SlideShow.prototype = {
-        moveTo: function (index) {
-            this.$root.velocity({
-                translateX: this.screenWidth * (-index)
-            }, 700);
-            this.current = index;
+        moveTo: function (index, direction) {
+            var self = this;
+            direction = direction || index - self.current;
+            var promise = self.executor.call(self, self.$slides.eq(self.current), self.$slides.eq(index), direction);
+            self.current = index;
+            return promise;
         },
 
         next: function () {
-            this.moveTo(this.current == (this.length - 1) ? 0 : ++this.current);
+            if (this.current == (this.length - 1)) {
+                this.moveTo(0, 1);
+            } else {
+                this.moveTo(this.current + 1);
+            }
         },
 
         prev: function () {
-            this.moveTo(this.current == 0 ? this.length - 1 : --this.current);
+            if (this.current == 0) {
+                this.moveTo(this.length - 1, -1);
+            } else {
+                this.moveTo(this.current - 1);
+            }
         }
     };
 

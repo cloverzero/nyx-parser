@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+<div id="<%=id%>" class="nyx-slide-show">
+    <div class="nyx-slide-show-prev animated flash"></div>
+    <ul class="nyx-full-height">
+        <% for (var i = 0, j = slides.length; i < j; i++) { %>
+        <li class="animated">
+            <div id="<%= id + '_' + i %>" class="nyx-full-width nyx-full-height nyx-image">&ensp;</div>
+        </li>
+        <% } %>
+    </ul>
+    <div class="nyx-slide-show-next animated flash"></div>
+</div>

@@ -1,0 +1,5 @@
+<% for (var i = 0, j = widget.slides.length; i < j; i++) { %>
+#<%= widget.id + '_' + i %> {
+    background-image: url("<%=widget.slides[i]%>");
+}
+<% } %>

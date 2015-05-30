@@ -7,6 +7,7 @@
 
 <link rel="stylesheet" href="styles/nyx.css">
 <link rel="stylesheet" href="bower_components/animate.css/animate.min.css">
+<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
 <style>
 <%=styles%>
 </style>
@@ -15,8 +16,15 @@
 <div class="nyx-wrapper">
     <%=pages%>
 </div>
-
+<% if ((typeof audio) != "undefined") { %>
+<div id="nyx-audio-toggle-button"><i class="fa fa-music"></i></div>
+<audio id="nyx-audio" src="<%=audio.src%>" loop></audio>
+<% } %>
 
 <script src="bower_components/requirejs/require.js" data-main="scripts/config.js"></script>
+<% if (wxEmbed) { %>
+<script src="/wx/<%=id%>"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<% } %>
 </body>
 </html>

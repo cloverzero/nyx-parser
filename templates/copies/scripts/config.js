@@ -3,8 +3,7 @@ requirejs.config({
         zepto           : '../bower_components/zepto/zepto',
         "zepto-touch"   : '../bower_components/zeptojs/src/touch',
         "zepto-callback": '../bower_components/zeptojs/src/callbacks',
-        "zepto-deferred": '../bower_components/zeptojs/src/deferred',
-        velocity        : '../bower_components/velocity/velocity.min'
+        "zepto-deferred": '../bower_components/zeptojs/src/deferred'
     },
 
     shim: {
@@ -19,9 +18,6 @@ requirejs.config({
         },
         "zepto-deferred": {
             deps: ["zepto", "zepto-callback"]
-        },
-        velocity: {
-            deps: ["zepto"]
         }
     },
 
