@@ -10,6 +10,8 @@ define(["zepto", "../nyx_page_animation"], function ($, pageAnimations) {
         self.$root = $(target);
         self.current = 0;
 
+        self.freeze = false;
+
         self.screenWidth = $(window).width();
 
         self.$ul = self.$root.children("ul");
@@ -35,10 +37,18 @@ define(["zepto", "../nyx_page_animation"], function ($, pageAnimations) {
     SlideShow.prototype = {
         moveTo: function (index, direction) {
             var self = this;
+
+            if (self.freeze) {
+                return;
+            }
+
+            self.freeze = true;
             direction = direction || index - self.current;
             var promise = self.executor.call(self, self.$slides.eq(self.current), self.$slides.eq(index), direction);
             self.current = index;
-            return promise;
+            promise.then(function () {
+                self.freeze = false;
+            });
         },
 
         next: function () {
