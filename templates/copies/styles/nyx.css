@@ -32,6 +32,7 @@ ul, ol, li {
     display: block;
     position: absolute;
     left: 0;
+    z-index: 10;
 }
 
 .nyx-widget {
@@ -70,8 +71,11 @@ ul, ol, li {
     border-top: 50px solid transparent;
     border-bottom: 50px solid transparent;
     z-index: 10;
+
     animation-duration: 2s !important;
     animation-iteration-count: infinite;
+    -webkit-animation-duration: 2s !important;
+    -webkit-animation-iteration-count: infinite;
 }
 
 .nyx-slide-show-prev {
@@ -297,4 +301,60 @@ ul, ol, li {
 .rotating {
     -webkit-animation: rotating 2s linear infinite;
     animation: rotating 2s linear infinite;
+}
+
+@-webkit-keyframes shrinkOutUp /* Safari and Chrome */ {
+    from {
+        -webkit-transform: scale(1) translateY(0);
+        transform: scale(1)  translateY(0);
+    }
+    to {
+        -webkit-transform: scale(0.5) translateY(-10%);
+        transform: scale(0.5) translateY(-10%);
+    }
+}
+@keyframes shrinkOutUp {
+    from {
+        -webkit-transform: scale(1) translateY(0);
+        transform: scale(1)  translateY(0);
+    }
+    to {
+        -webkit-transform: scale(0.5) translateY(-10%);
+        transform: scale(0.5) translateY(-10%);
+    }
+}
+
+.shrinkOutUp {
+    transform-origin: 50% 0;
+    -webkit-transform-origin: 50% 0;
+    -webkit-animation: shrinkOutUp 2s linear infinite;
+    animation: shrinkOutUp 2s linear infinite;
+}
+
+@-webkit-keyframes shrinkOutDown /* Safari and Chrome */ {
+    from {
+        -webkit-transform: scale(1) translateY(0);
+        transform: scale(1)  translateY(0);
+    }
+    to {
+        -webkit-transform: scale(0.5) translateY(10%);
+        transform: scale(0.5) translateY(10%);
+    }
+}
+@keyframes shrinkOutDown {
+    from {
+        -webkit-transform: scale(1) translateY(0);
+        transform: scale(1)  translateY(0);
+    }
+    to {
+        -webkit-transform: scale(0.5) translateY(10%);
+        transform: scale(0.5) translateY(10%);
+    }
+}
+
+.shrinkOutDown {
+    transform-origin: 50% 100%;
+    -webkit-transform-origin: 50% 100%;
+    -webkit-animation: shrinkOutDown 2s linear infinite;
+    animation: shrinkOutDown 2s linear infinite;
 }

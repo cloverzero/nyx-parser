@@ -1,4 +1,5 @@
 #<%=widget.id%> {<% if (widget.backgroundImage) { %>
-    background: url(<%=widget.backgroundImage%>) center center no-repeat;<% } %> <% if (widget.backgroundColor) { %>
+    background: url(<%=widget.backgroundImage%>) center center no-repeat;
+    background-size: cover; <% } %> <% if (widget.backgroundColor) { %>
     background-color: <%=widget.backgroundColor %>;<% } %>
 }

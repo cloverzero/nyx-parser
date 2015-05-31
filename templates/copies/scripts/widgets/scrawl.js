@@ -20,14 +20,27 @@ define(["zepto"], function ($) {
             this.canvas.width = config.width;
             this.canvas.height = config.height;
             this.ctx = this.canvas.getContext("2d");
-            if (config.color) {
-                this.ctx.fillStyle = config.color;
-                this.ctx.fillRect(0, 0, config.width, config.height);
-            }
-            this.ctx.lineJoin="round";
-            this.ctx.lineCap= "round";
-            this.ctx.lineWidth = 25;
-            this.ctx.globalCompositeOperation = "destination-out";
+            new $.Deferred(function (deferred) {
+                if (config.color) {
+                    self.ctx.fillStyle = config.color;
+                    self.ctx.fillRect(0, 0, config.width, config.height);
+                    deferred.resolve();
+                } else if (config.image) {
+                    var imageNode = new Image();
+                    imageNode.src = config.image;
+                    imageNode.onload = function () {
+                        self.ctx.drawImage(imageNode, 0, 0, config.width, config.height);
+                        deferred.resolve();
+                    }
+                }
+            }).then(function () {
+                self.ctx.lineJoin="round";
+                self.ctx.lineCap= "round";
+                self.ctx.lineWidth = 25;
+                self.ctx.globalCompositeOperation = "destination-out";
+            });
+
+
 
             this.$canvas.on("touchstart", function (e) {
                 e.preventDefault();

@@ -182,7 +182,7 @@ define(function (require) {
             var self = this;
             $.get("/count/" + this.config.id, function (response) {
                 self.setCount(response.count);
-            })
+            });
         },
 
         setCount: function (count) {
