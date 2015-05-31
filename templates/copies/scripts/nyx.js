@@ -9,6 +9,7 @@ define(function (require) {
     var Scrawl = require("widgets/scrawl");
 
     function Nyx(config) {
+        var self = this;
         this.config = config;
 
         this.currentPage = 0;
@@ -16,23 +17,19 @@ define(function (require) {
         this.totalPages = config.pages.length;
         this.widgets = [];
 
-        this.pageLoaded = false;
-        this.scrawlFinished = true;
-
-
-        this.loadedPromise = new $.Deferred(function(deferred) {
-            window.onPageLoaded(function () {
-                deferred.resolve();
-            });
-        });
-
-
+        this.hasWelcomePage = false;
         /**
          * 用于锁定翻页操作，在翻页动画过程中，此值为true
          * @type {boolean}
          */
         this.freeze = false;
 
+
+
+
+        this.loadedPromise = this._loadImages();
+
+        // 哎，设计上有点失误，这三个函数有顺序依赖
         this.initPages();
         this.initMusic();
         this.initCount();
@@ -52,7 +49,14 @@ define(function (require) {
             }
         }
 
-        this.executeWidgetAnimation("enter");
+        if (self.hasWelcomePage) {
+            self.loadedPromise.then(function () {
+                self.moveTo(self.startPage, 1);
+            });
+        } else {
+            self.executeWidgetAnimation("enter");
+        }
+
     }
 
     Nyx.prototype = {
@@ -90,6 +94,7 @@ define(function (require) {
 
                 var page = pages[index];
                 if (page.type === "welcome") {
+                    self.hasWelcomePage = true;
                     self.startPage = 1;
                 }
                 var widgets = page.widgets;
@@ -134,19 +139,8 @@ define(function (require) {
                     }
                 }
             });
-
-            if (self.startPage !== 0) {
-                self.loadedPromise.then(function () {
-                    self.moveTo(self.startPage, 1);
-                });
-            }
         },
 
-        _gotoStartPage: function () {
-            if (this.pageLoaded && this.scrawlFinished) {
-                 this.moveTo(1, 1);
-            }
-        },
 
         initMusic: function () {
             var self = this;
@@ -156,8 +150,19 @@ define(function (require) {
                 this.$audioButton = $("#nyx-audio-toggle-button").click(function () {
                     self.toggleAudio();
                 });
-                if (this.config.audio.autoplay) {
-                    this.toggleAudio();
+
+                if (this.hasWelcomePage) {
+                    this.loadedPromise.then(function () {
+                        self.$audioButton.show();
+                        if (self.config.audio.autoplay) {
+                            self.toggleAudio();
+                        }
+                    });
+                } else {
+                    self.$audioButton.show();
+                    if (self.config.audio.autoplay) {
+                        self.toggleAudio();
+                    }
                 }
             }
         },
@@ -193,7 +198,7 @@ define(function (require) {
          */
         nextPage: function () {
             if (this.currentPage == (this.totalPages - 1)) {
-                this.moveTo(this.startPage, 1);
+                //this.moveTo(this.startPage, 1);
             } else {
                 this.moveTo(this.currentPage + 1);
             }
@@ -204,7 +209,7 @@ define(function (require) {
          */
         prevPage: function () {
             if (this.currentPage == this.startPage) {
-                this.moveTo(this.totalPages - 1, -1);
+                //this.moveTo(this.totalPages - 1, -1);
             } else {
                 this.moveTo(this.currentPage - 1);
             }
@@ -271,8 +276,28 @@ define(function (require) {
                 }
             });
             return result;
-        }
+        },
 
+
+        _loadImages: function () {
+            var images = this.config.images;
+            var imageLoadPromises = [];
+            for (var i = 0; i < images.length; i++) {
+                var image = images[i];
+                imageLoadPromises.push(this._loadImage(image));
+            }
+            return $.when.apply($, imageLoadPromises);
+        },
+
+        _loadImage: function (imageAddress) {
+            return new $.Deferred(function (derferred) {
+                var imageNode = new Image();
+                imageNode.src = imageAddress;
+                imageNode.onload = function () {
+                    derferred.resolve();
+                }
+            });
+        }
     };
 
     return Nyx;

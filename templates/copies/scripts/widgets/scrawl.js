@@ -30,11 +30,13 @@ define(["zepto"], function ($) {
             this.ctx.globalCompositeOperation = "destination-out";
 
             this.$canvas.on("touchstart", function (e) {
+                e.preventDefault();
                 e.stopPropagation();
                 var target = e.touches[0];
                 self.lastX = target.pageX;
                 self.lastY = target.pageY;
             }).on("touchmove", function (e) {
+                e.preventDefault();
                 e.stopPropagation();
                 var target = e.touches[0];
 
@@ -42,6 +44,7 @@ define(["zepto"], function ($) {
                 self.lastX = target.pageX;
                 self.lastY = target.pageY;
             }).on("touchend",function(e){
+                e.preventDefault();
                 e.stopPropagation();
                 if (self.isOver()) {
                     self.$canvas.addClass("fadeOut").one("animationend webkitAnimationEnd", function () {

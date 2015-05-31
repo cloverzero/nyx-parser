@@ -25,27 +25,10 @@
         bottom: <%=audio.bottom%>;<% } %>
     }
 </style>
-<div id="nyx-audio-toggle-button"><i class="fa fa-music"></i></div>
+<div id="nyx-audio-toggle-button" style="display: none;"><i class="fa fa-music"></i></div>
 <audio id="nyx-audio" src="<%=audio.src%>" loop></audio>
 <% } %>
 
-<script>
-    (function (exports) {
-        var pageLoaded = false;
-        var callback = function () {};
-        window.onload = function () {
-            pageLoaded = true;
-            callback();
-        };
-        exports.onPageLoaded = function (call) {
-            if (pageLoaded) {
-                call();
-            } else {
-                callback = call;
-            }
-        };
-    })(window);
-</script>
 <script src="bower_components/requirejs/require.js" data-main="scripts/config.js"></script>
 <% if (wxEmbed) { %>
 <script src="/wx/<%=id%>"></script>
