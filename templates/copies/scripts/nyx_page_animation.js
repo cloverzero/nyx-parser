@@ -3,7 +3,8 @@ define(["zepto", "zepto-deferred"], function ($) {
         slide: [["slideOutUp", "slideInUp"], ["slideOutDown", "slideInDown"]],
         slideHorizontally: [["slideOutLeft", "slideInRight"], ["slideOutRight", "slideInLeft"]],
         flip: [["nyxFlipOutUp", "nyxFlipInUp"], ["nyxFlipOutDown", "nyxFlipInDown"]],
-        shrinkAndSlide: [["shrinkOutUp", "slideInUp"], ["shrinkOutDown", "slideInDown"]]
+        shrinkAndSlide: [["shrinkOutUp", "slideInUp"], ["shrinkOutDown", "slideInDown"]],
+        fade: [["fadeOut", "fadeIn"], ["fadeOut", "fadeIn"]]
     };
 
 

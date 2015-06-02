@@ -27,7 +27,14 @@ define(function (require) {
 
 
 
-        this.loadedPromise = this._loadImages();
+        this.loadedPromise = this._loadImages().then(function () {
+            // 延迟1.5秒
+            return new $.Deferred(function (deferred) {
+                window.setTimeout(function () {
+                    deferred.resolve();
+                }, 1500);
+            })
+        });
 
         // 哎，设计上有点失误，这三个函数有顺序依赖
         this.initPages();

@@ -15,7 +15,8 @@ SlideShowBuilder.prototype = Object.create(WidgetBuilder.prototype);
 SlideShowBuilder.prototype.constructor = SlideShowBuilder;
 
 SlideShowBuilder.prototype.generateCss = function (widget) {
-    return this.imageCssTemplate({widget: widget});
+    var css = WidgetBuilder.prototype.generateCss.call(this, widget);
+    return css + '\n' + this.imageCssTemplate({widget: widget});
 };
 
 SlideShowBuilder.prototype.generateHtml = function (widget) {
