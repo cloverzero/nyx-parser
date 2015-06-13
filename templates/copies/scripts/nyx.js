@@ -25,7 +25,7 @@ define(function (require) {
         this.freeze = false;
 
 
-
+        this.$bottomButton = $("#nyx-bottom-button");
 
         this.loadedPromise = this._loadImages().then(function () {
             // 延迟1.5秒
@@ -59,6 +59,7 @@ define(function (require) {
         if (self.hasWelcomePage) {
             self.loadedPromise.then(function () {
                 self.moveTo(self.startPage, 1);
+                self.$bottomButton.show();
             });
         } else {
             self.executeWidgetAnimation("enter");
@@ -247,7 +248,13 @@ define(function (require) {
             }).then(function () {
                 self.widgets[prevPage].hide();
                 self.freeze = false;
-            })
+            });
+
+            if (pageNumber === self.totalPages - 1) {
+                self.$bottomButton.hide();
+            } else {
+                self.$bottomButton.show();
+            }
         },
 
         /**

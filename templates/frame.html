@@ -16,6 +16,7 @@
 <div class="nyx-wrapper">
     <%=pages%>
 </div>
+<div id="nyx-bottom-button" class="animated flash" style="display: none;"></div>
 <% if ((typeof audio) != "undefined") { %>
 <style>
     #nyx-audio-toggle-button {<% if (audio.right) { %>
@@ -25,7 +26,7 @@
         bottom: <%=audio.bottom%>;<% } %>
     }
 </style>
-<div id="nyx-audio-toggle-button" style="display: none;"><i class="fa fa-music"></i></div>
+<div id="nyx-audio-toggle-button" style="display: none;"></div>
 <audio id="nyx-audio" src="<%=audio.src%>" loop></audio>
 <% } %>
 
