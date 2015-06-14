@@ -36,6 +36,7 @@ FrameBuilder.prototype = {
             title: config.title,
             audio: config.audio,
             wxEmbed: config.wxEmbed,
+            preview: config.preview,
             styles: styles.join("\n"),
             pages: pages.join("\n")
         });

@@ -78,11 +78,19 @@ ul, ol, li {
     -webkit-animation-iteration-count: infinite;
 }
 
+.preview .nyx-slide-show-prev, .preview .nyx-slide-show-next {
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;
+    background-size: 14px 14px;
+}
+
 .nyx-slide-show-prev {
     left: 0;
 }
 
 .nyx-slide-show-next {
+    -webkit-transform: rotate(180deg);
     transform: rotate(180deg);
     right: 0;
 }
@@ -101,6 +109,12 @@ ul, ol, li {
     background-size: 27px 27px;
 }
 
+.preview #nyx-audio-toggle-button {
+    width: 14px;
+    height: 14px;
+    background-size: 14px 14px;
+}
+
 #nyx-bottom-button {
     position: absolute;
     bottom: 0;
@@ -114,6 +128,13 @@ ul, ol, li {
 
     -webkit-animation-duration: 2s !important;
     -webkit-animation-iteration-count: infinite;
+}
+
+.preview #nyx-bottom-button {
+    width: 13px;
+    height: 7px;
+    margin-left: -7px;
+    background-size: 13px 7px;
 }
 
 .nyx-scrawl {

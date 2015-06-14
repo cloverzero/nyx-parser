@@ -13,6 +13,7 @@ var BASE_PATH = __dirname;
  * @constructor
  */
 function NyxParser(options) {
+    this.options = options;
     if (options && options.out) {
         this.outputPath = process.cwd() + "/" + options.out;
     } else {
@@ -34,6 +35,10 @@ NyxParser.prototype = {
     build: function (config) {
         var self = this;
 
+        if (self.options.preview) {
+            config.preview = true;
+        }
+
         fse.copy(TEMPLATES_PATH + '/copies', self.outputPath, function (err) {
             if (err) {
                 console.log(err);
@@ -45,10 +50,18 @@ NyxParser.prototype = {
         var images = [];
         var imageKeys = ['src', 'backgroundImage', 'image'];
         var imagePattern = /(\.jpg)|(\.png)|(\.gif)|(\.jpeg)$/;
-        this.traverse(config, function (key, value) {
+
+        var dimensionKeys = ['width', 'height'];
+        this.traverse(config, function (key, value, obj) {
             if (imageKeys.indexOf(key) != -1) {
                 if (imagePattern.test(value)) {
                     images.push(value);
+                }
+            }
+
+            if (self.options.preview) {
+                if (dimensionKeys.indexOf(key) != -1) {
+                    obj[key] = value / 2;
                 }
             }
         });
@@ -75,7 +88,7 @@ NyxParser.prototype = {
 
     traverse: function (o, func) {
         for (var i in o) {
-            func.apply(this, [i, o[i]]);
+            func.apply(this, [i, o[i], o]);
             if (o[i] !== null && typeof(o[i]) == "object") {
                 //going on step down in the object tree!!
                 this.traverse(o[i], func);

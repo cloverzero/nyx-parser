@@ -12,7 +12,7 @@
 <%=styles%>
 </style>
 </head>
-<body>
+<body class="<%=(typeof preview) != 'undefined' ? 'preview' : ''%>">
 <div class="nyx-wrapper">
     <%=pages%>
 </div>
