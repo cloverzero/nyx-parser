@@ -266,7 +266,7 @@ define(function (require) {
         switchPage: function (pageNumber, direction) {
             var self = this;
             direction = direction || pageNumber - self.currentPage;
-            var enterAnimation = self.config.pages[pageNumber].enter;
+            var enterAnimation = self.config.pages[self.currentPage].leave ||self.config.pages[pageNumber].enter;
             var executor = pageAnimations.getExecutor(enterAnimation);
             var promise = executor.call(self, self.$pages.eq(self.currentPage), self.$pages.eq(pageNumber), direction);
             self.currentPage = pageNumber;

@@ -51,7 +51,7 @@ NyxParser.prototype = {
         var imageKeys = ['src', 'backgroundImage', 'image'];
         var imagePattern = /(\.jpg)|(\.png)|(\.gif)|(\.jpeg)$/;
 
-        var dimensionKeys = ['width', 'height'];
+        var dimensionKeys = ['width', 'height', 'fontSize'];
         this.traverse(config, function (key, value, obj) {
             if (imageKeys.indexOf(key) != -1) {
                 if (imagePattern.test(value)) {
