@@ -52,6 +52,7 @@ NyxParser.prototype = {
         var imagePattern = /(\.jpg)|(\.png)|(\.gif)|(\.jpeg)$/;
 
         var dimensionKeys = ['fontSize'];
+        var pattern = /^(\d+)(\w+)$/;
         this.traverse(config, function (key, value, obj) {
             if (imageKeys.indexOf(key) != -1) {
                 if (imagePattern.test(value)) {
@@ -61,7 +62,8 @@ NyxParser.prototype = {
 
             if (self.options.preview) {
                 if (dimensionKeys.indexOf(key) != -1) {
-                    obj[key] = value / 2;
+                    var result = pattern.exec(value);
+                    obj[key] = ((result[1] - 0) / 2) + result[2];
                 }
             }
         });

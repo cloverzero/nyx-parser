@@ -36,7 +36,7 @@ define(["zepto"], function ($) {
             }).then(function () {
                 self.ctx.lineJoin="round";
                 self.ctx.lineCap= "round";
-                self.ctx.lineWidth = 25;
+                self.ctx.lineWidth = 40;
                 self.ctx.globalCompositeOperation = "destination-out";
             });
 

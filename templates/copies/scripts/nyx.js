@@ -25,7 +25,9 @@ define(function (require) {
         this.freeze = false;
 
 
-        this.$bottomButton = $("#nyx-bottom-button");
+        this.$bottomButton = $("#nyx-bottom-button").bind("touch", function () {
+            self.nextPage();
+        });
 
         this.loadedPromise = this._loadImages().then(function () {
             // 延迟1.5秒
@@ -62,7 +64,7 @@ define(function (require) {
                 self.$bottomButton.show();
             });
         } else {
-            self.executeWidgetAnimation("enter");
+            self.executeWidgetAnimation();
         }
 
     }
@@ -238,12 +240,8 @@ define(function (require) {
 
             self.freeze = true;
             var prevPage = self.currentPage;
-            var promises = skipLeave ? [] : self.executeWidgetAnimation("leave");
-
-            $.when.apply($, promises).then(function () {
-                return self.switchPage(pageNumber, direction);
-            }).then(function () {
-                var result = self.executeWidgetAnimation("enter");
+            self.switchPage(pageNumber, direction).then(function () {
+                var result = self.executeWidgetAnimation();
                 return $.when.apply($, result);
             }).then(function () {
                 self.widgets[prevPage].hide();
@@ -275,21 +273,30 @@ define(function (require) {
 
         /**
          * 执行 widget 动画
-         * @param {String} type 动画类型，分为「enter」和「leave」
          * @returns {Array}
          */
-        executeWidgetAnimation: function (type) {
+        executeWidgetAnimation: function () {
+            var self = this;
             var widgets = this.config.pages[this.currentPage].widgets || [];
             var result = [];
             widgets.forEach(function (widget) {
-                if (widget[type]) {
-                    var $widget = $("#" + widget.id);
-                    var executor = widgetAnimations.getExecutor(widget[type]);
-                    var promise = executor.call(this, $widget, type, widget[type + "Timeout"]);
-                    result.push(promise);
+                var $widget = $("#" + widget.id);
+                var enter = widget['enter'];
+                var leave = widget['leave'];
+                if (enter) {
+                    result.push(self._executeWidgetAnimation($widget, enter, widget["enterTimeout"], "enter"));
                 }
+                if (leave) {
+                    result.push(self._executeWidgetAnimation($widget, leave, widget["leaveTimeout"], "leave"));
+                }
+
             });
             return result;
+        },
+
+        _executeWidgetAnimation: function ($widget, animation, timeout, type) {
+            var executor = widgetAnimations.getExecutor(animation);
+            return executor.call(this, $widget, type, timeout);
         },
 
 
