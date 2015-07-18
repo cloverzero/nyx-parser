@@ -20,6 +20,7 @@ TextBuilder.prototype.generateCss = function (widget) {
 };
 
 TextBuilder.prototype.generateHtml = function (widget) {
+	widget.value = widget.value.replace(/\n/g, '<br />');
     return this.htmlTemplate(widget);
 };
 
