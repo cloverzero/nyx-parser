@@ -2,7 +2,7 @@ define(function (require) {
     "use strict";
 
     var $ = require("zepto");
-    require("zepto-touch");
+    var Hammer = require("hammer");
     var pageAnimations = require("nyx_page_animation");
     var widgetAnimations = require("nyx_widget_animation");
     var SlideShow = require("widgets/slide_show");
@@ -86,11 +86,14 @@ define(function (require) {
             var windowWidth = $window.width();
 
             var $nyx = $(".nyx-wrapper");
-            $nyx.on("swipeUp", function () {
+            $nyx.height(windowHeight);
+            var eNyx = document.querySelector('.nyx-wrapper');
+            var hNyx = new Hammer(eNyx);
+            hNyx.on("panup", function () {
                 self.nextPage();
-            }).on("swipeDown", function () {
+            }).on("pandown", function () {
                 self.prevPage();
-            }).height(windowHeight);
+            });
 
             var pages = this.config.pages;
             this.$pages = $(".nyx-page").each(function (index) {
