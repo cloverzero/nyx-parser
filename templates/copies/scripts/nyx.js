@@ -244,11 +244,13 @@ define(function (require) {
             self.freeze = true;
             var prevPage = self.currentPage;
             self.switchPage(pageNumber, direction).then(function () {
+
+                self.widgets[prevPage].hide();
+                self.freeze = false;
+
                 var result = self.executeWidgetAnimation();
                 return $.when.apply($, result);
             }).then(function () {
-                self.widgets[prevPage].hide();
-                self.freeze = false;
             });
 
             if (pageNumber === self.totalPages - 1) {

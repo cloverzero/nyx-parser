@@ -5,7 +5,8 @@
         "zepto-touch"   : '../bower_components/zeptojs/src/touch',
         "zepto-callback": '../bower_components/zeptojs/src/callbacks',
         "zepto-deferred": '../bower_components/zeptojs/src/deferred',
-        "NyxConfig"     : 'empty:'
+        "NyxConfig"     : 'empty:',
+        "hammer"        : '../bower_components/hammerjs/hammer.min'
     },
     shim: {
         zepto: {
