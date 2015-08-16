@@ -21,7 +21,7 @@ FrameBuilder.prototype = {
         if (config.backgroundImage) {
             frameStyle += 'background: url(' + config.backgroundImage + ') center center no-repeat;'
         }
-        frameStyle += "background-color: " + (config.backgroundColor || "black") + ";";
+        frameStyle += "background-color: " + (config.backgroundColor || "white") + ";";
         frameStyle += " }";
         styles.push(frameStyle);
 

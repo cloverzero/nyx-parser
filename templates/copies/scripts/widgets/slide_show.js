@@ -1,4 +1,4 @@
-define(["zepto", "../nyx_page_animation"], function ($, pageAnimations) {
+define(["zepto", "../nyx_page_animation", "hammer"], function ($, pageAnimations, Hammer) {
     /**
      *
      * @param {String|Zepto} target
@@ -28,9 +28,10 @@ define(["zepto", "../nyx_page_animation"], function ($, pageAnimations) {
 
         self.executor = pageAnimations.getExecutor(options.animation || 'slideHorizontally');
 
-        self.$root.on("swipeLeft", function () {
+        var hRoot = new Hammer(self.$root[0]);
+        hRoot.on("panleft", function () {
             self.next();
-        }).on("swipeRight", function () {
+        }).on("panright", function () {
             self.prev();
         });
     }

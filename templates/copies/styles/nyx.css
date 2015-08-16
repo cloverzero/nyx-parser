@@ -9,6 +9,10 @@ ul, ol, li {
     padding: 0;
 }
 
+.animated {
+    -webkit-transform: translateZ(0);
+}
+
 .nyx-full-width {
     width: 100%;
 }
