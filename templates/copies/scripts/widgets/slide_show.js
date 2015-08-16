@@ -2,9 +2,10 @@ define(["zepto", "../nyx_page_animation"], function ($, pageAnimations) {
     /**
      *
      * @param {String|Zepto} target
+     * @param {Object} options
      * @constructor
      */
-    function SlideShow(target) {
+    function SlideShow(target, options) {
         var self = this;
 
         self.$root = $(target);
@@ -25,7 +26,7 @@ define(["zepto", "../nyx_page_animation"], function ($, pageAnimations) {
         self.length = self.$slides.size();
 
 
-        self.executor = pageAnimations.getExecutor('slideHorizontally');
+        self.executor = pageAnimations.getExecutor(options.animation || 'slideHorizontally');
 
         self.$root.on("swipeLeft", function () {
             self.next();

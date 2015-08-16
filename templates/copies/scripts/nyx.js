@@ -126,7 +126,7 @@ define(function (require) {
                         })(widget.moveTo);
                     }
                     if (widget.type === "slideShow") {
-                        new SlideShow("#" + widget.id);
+                        new SlideShow("#" + widget.id, widget);
                     } else if (widget.type === "scrawl") {
                         widget.width = windowWidth;
                         widget.height = windowHeight;

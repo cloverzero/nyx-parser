@@ -19,7 +19,9 @@ requirejs.config({
         "zepto-deferred": {
             deps: ["zepto", "zepto-callback"]
         }
-    },
+    }
+});
 
-    deps: ["boot"]
+require(["nyx", 'NyxConfig'], function (Nyx, config) {
+    window.nyx = new Nyx(config);
 });
