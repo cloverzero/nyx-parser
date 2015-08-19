@@ -48,7 +48,7 @@ var config = {
                     "top": "23.4375%",
                     "src": "http://115.29.32.105:8080/public/upload/f2ae6a3e96f52da0419b7328379b0087.png",
                     "hasAnimation": true,
-                    "enter": "fadeInDown",
+                    "enter": "lightSpeedInRight",
                     "enterTimeout": 500,
                     "enterDuration": 1000
                 },
