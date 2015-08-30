@@ -18,7 +18,8 @@ var config = {
                     "align": "center",
                     "verticalAlign": "center",
                     "width": "13.88888888888889%",
-                    "height": "7.8125%"
+                    "height": "7.8125%",
+                    "zIndex": "1"
                 }
             ],
             "backgroundColor": "#FFF",
@@ -37,7 +38,8 @@ var config = {
                     "height": "100%",
                     "top": "0%",
                     "src": "http://115.29.32.105:8080/public/upload/217da75265c9da81da6268c78959a006.png",
-                    "hasAnimation": false
+                    "hasAnimation": false,
+                    "zIndex": "10"
                 },
                 {
                     "type": "image",
@@ -50,7 +52,8 @@ var config = {
                     "hasAnimation": true,
                     "enter": "lightSpeedInRight",
                     "enterTimeout": 500,
-                    "enterDuration": 1000
+                    "enterDuration": 1000,
+                    "moveTo": "55ce1a44e516ffef19ecf9b1"
                 },
                 {
                     "type": "image",
